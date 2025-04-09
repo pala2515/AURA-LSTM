@@ -1,36 +1,3 @@
-import numpy as np
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from rdkit import Chem
-import os
-import argparse # Added for command-line arguments
-
-# Import local modules
-from utils.data_preprocessing import load_and_preprocess_data
-from utils.graph_utils import molecule_to_graph
-from models.gat_model import GATModel
-from models.gcn_model import EnhancedGCNModel
-from models.gin_model import EnhancedGINModel
-from utils.feature_engineering import (
-    remove_zero_columns,
-    scale_features,
-    one_hot_encode_labels
-)
-from utils.training_utils import MetricsCallback
-
-def setup_gpu():
-    gpus = tf.config.experimental.list_physical_devices('GPU')
-    if gpus:
-        try:
-            for gpu in gpus:
-                tf.config.experimental.set_memory_growth(gpu, True)
-            logical_gpus = tf.config.experimental.list_logical_devices('GPU')
-            print(f"{len(gpus)} Physical GPUs, {len(logical_gpus)} Logical GPUs")
-        except RuntimeError as e:
-            print(f"GPU setup error: {e}")
-
 def main(args):
     setup_gpu()
 
